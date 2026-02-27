@@ -1,0 +1,12 @@
+[project]
+name = "box-reader"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "isort>=8.0.0",
+    "opencv-python>=4.13.0.92",
+    "pillow>=12.1.1",
+    "pydantic-settings>=2.13.1",
+]
