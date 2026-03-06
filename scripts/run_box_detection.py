@@ -1,10 +1,10 @@
 import logging
 
-from src.infrastructure.camera.cv_camera_stream import CVCameraStream
-from src.services.image_reader_service import ImageReaderService
-from src.services.box_detect_service import BoxDetectService
 from src.computer_vision.box_detector.cv_box_detector import CVBoxDetector
 from src.config.logging import setup_logging
+from src.infrastructure.camera.cv_camera_stream import CVCameraStream
+from src.services.box_detect_service import BoxDetectService
+from src.services.image_reader_service import ImageReaderService
 
 logger = logging.getLogger(__name__)
 

@@ -1,17 +1,28 @@
-import cv2
 import logging
-from typing import List, Iterator
-from src.domain.image_streamer import Frames
-from src.domain.image_streamer import ImageStreamer
+from typing import Iterator, List
+
+import cv2
+
+from src.domain.image_streamer import Frames, ImageStreamer
+from src.services.common import default_injection
 
 logger = logging.getLogger(__name__)
 
+def _lazy_loader():
+    from src.infrastructure.camera.cv_camera_stream import CVCameraStream
+    return [CVCameraStream(0)]
 
+_DEFAULT_PARAMS = {
+    "cameras": _lazy_loader,
+}
+
+@default_injection(_DEFAULT_PARAMS)
 class ImageReaderService:
     def __init__(self, cameras: List[ImageStreamer]) -> None:
         self._cameras = cameras
         self._captures: List[cv2.VideoCapture] = []
         self._running = False
+        self._camera_srcs = [c.src for c in cameras]
 
     def start(self) -> None:
         logger.info("Starting image reader service")

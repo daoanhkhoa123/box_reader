@@ -1,8 +1,10 @@
 import io
-from PIL import Image as PILImage
-import torch
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from typing import Optional
+
+import torch
+from PIL import Image as PILImage
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+
 from src.domain.box_reader import BoxReader
 from src.domain.entities import BoxInfo, ImageInfo
 

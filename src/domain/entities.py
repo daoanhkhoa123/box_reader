@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -7,10 +8,9 @@ class ImageInfo:
     """
     A synchronized image frame captured from a camera.
     """
-    image_id: str
     camera_id: str
-    captured_at: datetime
-    storage_path: str 
+    captured_at: datetime = datetime.now()
+    image_id: Optional[str] = None
 
 @dataclass(frozen=True)
 class BoxInfo:
@@ -29,7 +29,6 @@ class InferenceResult:
     Result of box reading for a given image.
     """
     image_id: str
-    detected_at: datetime
     model_version: str
     box_information: BoxInfo
 

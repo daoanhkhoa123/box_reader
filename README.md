@@ -201,3 +201,31 @@ Application entrypoints and composition root.
 - Keeps complexity out of services
 - Enables multiple runtimes from same codebase
 - Supports zero-downtime deploys
+
+---
+# The Shii That gpt Wrote
+```
+Camera
+   │
+ImageReaderService
+   │
+frames
+   │
+BoxDetectService
+   │
+┌── no box ────────────────► next frame
+│
+└── box found
+        │
+        ▼
+      Queue
+        │
+        ▼
+   Reader Thread
+        │
+        ▼
+  BoxReaderService
+        │
+        ▼
+   UnitOfWork → repositories
+```

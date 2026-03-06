@@ -1,16 +1,17 @@
-import cv2
-from typing import Union, List
+from dataclasses import dataclass
+from typing import List, Union
 
-Frame = cv2.typing.MatLike
+import cv2
+
+
+@dataclass
+class Frame:
+    img: cv2.typing.MatLike
+    src: str
+
 Frames = List[Frame]
 
-
 class ImageStreamer:
-    """
-    Interface / base class for camera streams.
-    Implementations should return cv2.VideoCapture in __enter__.
-    """
-
     def __init__(self, src: Union[int, str]) -> None:
         self.src = src
         self.camera = None
@@ -20,3 +21,9 @@ class ImageStreamer:
 
     def close(self) -> None:
         raise NotImplementedError
+
+    def __enter__(self):
+        return self.open()
+
+    def __exit__(self, exc_type, exc, tb):
+        self.close()

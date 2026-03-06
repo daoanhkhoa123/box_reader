@@ -1,5 +1,7 @@
-from src.domain.entities import ImageInfo, BoxInfo
 from typing import Optional
+
+from src.domain.entities import BoxInfo, ImageInfo
+
 
 class BoxReader:
     version: str 

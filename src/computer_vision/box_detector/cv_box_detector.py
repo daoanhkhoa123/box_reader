@@ -1,8 +1,11 @@
+from typing import Optional
+
 import cv2
 import numpy as np
-from src.domain.entities import ImageInfo
+
 from src.domain.box_detector import BoxDetector
-from typing import Optional
+from src.domain.entities import ImageInfo
+
 
 class CVBoxDetector(BoxDetector):
     """

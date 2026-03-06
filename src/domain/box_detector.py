@@ -1,5 +1,6 @@
-from src.domain.entities import ImageInfo
 from typing import Optional
+
+from src.domain.entities import ImageInfo
 
 
 class BoxDetector:

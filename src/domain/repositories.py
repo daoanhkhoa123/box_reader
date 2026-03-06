@@ -1,6 +1,7 @@
-from src.domain.entities import ImageInfo
 from typing import Iterable
-from src.domain.entities import InferenceResult
+
+from src.domain.entities import ImageInfo, InferenceResult
+
 
 class InferenceRepository:
     """
