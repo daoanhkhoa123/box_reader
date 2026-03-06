@@ -4,6 +4,7 @@ from typing import Optional, Union
 
 class CVCameraStream(ImageStream):
     def __init__(self, src: Union[int, str]) -> None:
+        super().__init__(src)
         self.src = src
         self.camera: Optional[cv2.VideoCapture] = None
 

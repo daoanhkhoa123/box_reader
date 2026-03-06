@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from src.domain.entities import Image
+from src.domain.entities import ImageInfo
 from src.domain.box_detector import BoxDetector
 from typing import Optional
 
@@ -9,7 +9,7 @@ class CVBoxDetector(BoxDetector):
     Determines whether a box (rectangular shape) is present in an image.
     """
 
-    def has_box(self, raw_bytes: bytes, image: Optional[Image] = None) -> bool:
+    def has_box(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> bool:
         # ---- Get numpy image ----
         img_array = np.frombuffer(raw_bytes, np.uint8)
         img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)

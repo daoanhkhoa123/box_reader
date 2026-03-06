@@ -1,4 +1,4 @@
-from src.domain.entities import Image, BoxInformation
+from src.domain.entities import ImageInfo, BoxInfo
 from typing import Optional
 
 class BoxReader:
@@ -7,5 +7,5 @@ class BoxReader:
     Determines whether readable information exists on a box.
     """
 
-    def read(self, raw_bytes: bytes, image: Optional[Image] = None) -> BoxInformation:
+    def read(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> BoxInfo:
         raise NotImplementedError

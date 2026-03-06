@@ -1,5 +1,4 @@
-from pathlib import Path
-from src.domain.entities import Image
+from src.domain.entities import ImageInfo
 
 
 class ImageStorage:
@@ -7,8 +6,8 @@ class ImageStorage:
     Stores raw image frames for training and auditing.
     """
 
-    def save(self, image: Image, raw_bytes: bytes) -> Path:
+    def save(self, image: ImageInfo, raw_bytes: bytes) -> str:
         raise NotImplementedError
 
-    def load(self, path: Path) -> bytes:
+    def read(self, path: str) -> bytes:
         raise NotImplementedError

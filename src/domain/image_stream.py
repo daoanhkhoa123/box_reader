@@ -12,7 +12,8 @@ class ImageStream:
     """
 
     def __init__(self, src: Union[int, str]) -> None:
-        raise NotImplementedError
+        self.src = src
+        self.camera = None
 
     def open(self) -> cv2.VideoCapture:
         raise NotImplementedError

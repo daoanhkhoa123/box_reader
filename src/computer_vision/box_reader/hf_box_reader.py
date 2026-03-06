@@ -4,7 +4,7 @@ import torch
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from typing import Optional
 from src.domain.box_reader import BoxReader
-from src.domain.entities import BoxInformation, Image
+from src.domain.entities import BoxInfo, ImageInfo
 
 
 class HFBoxReader(BoxReader):
@@ -19,7 +19,7 @@ class HFBoxReader(BoxReader):
         )
         self.model.eval()
 
-    def read(self, raw_bytes: bytes, image: Optional[Image] = None) -> BoxInformation:
+    def read(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> BoxInfo:
         # Decode raw bytes into image
         pil_image = PILImage.open(io.BytesIO(raw_bytes)).convert("RGB")
 
@@ -38,7 +38,7 @@ class HFBoxReader(BoxReader):
 
         confidence = 1.0 if text else 0.0  # HF TrOCR doesn't expose token probs cleanly
 
-        return BoxInformation(
+        return BoxInfo(
             text=text,
             confidence=confidence
         )

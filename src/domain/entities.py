@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
-from pathlib import Path
 
 
 @dataclass(frozen=True)
-class Image:
+class ImageInfo:
     """
     A synchronized image frame captured from a camera.
     """
@@ -14,7 +13,7 @@ class Image:
     storage_path: str 
 
 @dataclass(frozen=True)
-class BoxInformation:
+class BoxInfo:
     made_in: str 
     cost: str
 
@@ -25,13 +24,13 @@ class BoxInformation:
         }"""
 
 @dataclass(frozen=True)
-class Result:
+class InferenceResult:
     """
     Result of box reading for a given image.
     """
     image_id: str
     detected_at: datetime
     model_version: str
-    box_information: BoxInformation
+    box_information: BoxInfo
 
     

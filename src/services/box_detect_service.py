@@ -26,3 +26,5 @@ class BoxDetectService:
 
         if has_box:
             self.logger.debug("Box detected!")
+
+        return has_box
