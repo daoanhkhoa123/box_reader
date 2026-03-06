@@ -13,5 +13,6 @@ def func():
         res_detect = box_detect.detect(frames)
 
         if res_detect:
-            
+            # this has to be in seperate threadd with a queue
             box_information = box_reader.read(frames)    
+            

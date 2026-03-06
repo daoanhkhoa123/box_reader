@@ -1,9 +1,8 @@
-from src.domain.result_storage import ResultStorage
-from src.domain.image_storage import ImageStorage
+from src.domain.repositories import ImageRepository, InferenceRepository
 from src.domain.entities import ImageInfo
 
 class StorageService:
-    def __init__(self, image_storage: ImageStorage, result_storage: ResultStorage) -> None:
+    def __init__(self, image_storage: ImageRepository, result_storage: InferenceRepository) -> None:
         self.image_storage = image_storage
         self.result_storage = result_storage
 
