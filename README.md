@@ -176,6 +176,8 @@ Application orchestration and business workflows.
 - Easy to test with fake adapters
 - Stable over time even as tech evolves
 
+---
+
 ## `src\controller`
 
 ### Responsibility
