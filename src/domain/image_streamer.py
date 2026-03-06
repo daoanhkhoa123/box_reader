@@ -5,7 +5,7 @@ Frame = cv2.typing.MatLike
 Frames = List[Frame]
 
 
-class ImageStream:
+class ImageStreamer:
     """
     Interface / base class for camera streams.
     Implementations should return cv2.VideoCapture in __enter__.

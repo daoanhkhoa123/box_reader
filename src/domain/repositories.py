@@ -7,7 +7,7 @@ class InferenceRepository:
     Stores inference results for analysis and retraining.
     """
 
-    def save(self, result: InferenceResult) -> None:
+    def save(self, result: InferenceResult) -> InferenceResult:
         raise NotImplementedError
 
     def list_by_image(self, image_id: str) -> Iterable[InferenceResult]:

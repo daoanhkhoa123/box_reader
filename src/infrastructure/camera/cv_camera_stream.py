@@ -1,8 +1,8 @@
 import cv2
-from src.domain.image_stream import ImageStream
+from src.domain.image_streamer import ImageStreamer
 from typing import Optional, Union
 
-class CVCameraStream(ImageStream):
+class CVCameraStream(ImageStreamer):
     def __init__(self, src: Union[int, str]) -> None:
         super().__init__(src)
         self.src = src

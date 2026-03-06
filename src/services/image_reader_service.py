@@ -1,14 +1,14 @@
 import cv2
 import logging
 from typing import List, Iterator
-from src.domain.image_stream import Frames
-from src.domain.image_stream import ImageStream
+from src.domain.image_streamer import Frames
+from src.domain.image_streamer import ImageStreamer
 
 logger = logging.getLogger(__name__)
 
 
 class ImageReaderService:
-    def __init__(self, cameras: List[ImageStream]) -> None:
+    def __init__(self, cameras: List[ImageStreamer]) -> None:
         self._cameras = cameras
         self._captures: List[cv2.VideoCapture] = []
         self._running = False
