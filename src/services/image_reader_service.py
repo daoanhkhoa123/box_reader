@@ -3,7 +3,7 @@ from typing import Iterator, List
 
 import cv2
 
-from src.domain.image_streamer import Frames, ImageStreamer
+from src.domain.image_streamer import Frames, ImageStreamer, Frame
 from src.services.common import default_injection
 
 logger = logging.getLogger(__name__)
@@ -19,31 +19,30 @@ _DEFAULT_PARAMS = {
 @default_injection(_DEFAULT_PARAMS)
 class ImageReaderService:
     def __init__(self, cameras: List[ImageStreamer]) -> None:
-        self._cameras = cameras
-        self._captures: List[cv2.VideoCapture] = []
-        self._running = False
-        self._camera_srcs = [c.src for c in cameras]
+        self.cameras = cameras
+        self.captures: List[cv2.VideoCapture] = []
+        self.running = False
 
     def start(self) -> None:
         logger.info("Starting image reader service")
-        self._captures = [camera.open() for camera in self._cameras]
-        self._running = True
+        self.captures = [camera.open() for camera in self.cameras]
+        self.running = True
 
     def frames(self) -> Iterator[Frames]:
-        if not self._running:
+        if not self.running:
             raise RuntimeError("ImageReaderService not started")
 
         try:
-            while self._running:
+            while self.running:
                 batch = []
 
-                for idx, cap in enumerate(self._captures):
+                for idx, cap in enumerate(self.captures):
                     ok, frame = cap.read()
                     if not ok:
                         logger.error("Failed to read frame from camera %d", idx)
                         raise RuntimeError("Camera read failure")
 
-                    batch.append(frame)
+                    batch.append(Frame(frame, str(self.cameras[idx].src)))
 
                 yield batch  # one frame per camera
 
@@ -52,8 +51,8 @@ class ImageReaderService:
 
     def stop(self) -> None:
         logger.info("Stopping image reader service")
-        for camera in self._cameras:
+        for camera in self.cameras:
             camera.close()
 
-        self._captures.clear()
-        self._running = False
+        self.captures.clear()
+        self.running = False

@@ -30,7 +30,7 @@ class MockImageRepository(ImageRepository):
         self._metadata: Dict[str, ImageInfo] = {}
 
     def save(self, image: ImageInfo, raw_bytes: bytes) -> str:
-        idd = "test" if image.image_id is None else image.image_id
+        idd = "test none holder" if image.image_id is None else image.image_id
         
         self._images[idd] = raw_bytes
         self._metadata[idd] = image

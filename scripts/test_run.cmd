@@ -1,0 +1,1 @@
+python -m src.controller.box_detection_read_controller

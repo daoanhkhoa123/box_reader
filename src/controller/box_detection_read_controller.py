@@ -6,7 +6,7 @@ from src.domain.image_streamer import Frames
 from src.services.box_detect_service import BoxDetectService
 from src.services.box_reader_service import BoxReaderService
 from src.services.image_reader_service import ImageReaderService
-
+from src.infrastructure.camera.cv_camera_stream import CVCameraStream
 
 def _reader_worker(queue: Queue, box_reader: BoxReaderService):
     while True:
@@ -24,6 +24,7 @@ def _reader_worker(queue: Queue, box_reader: BoxReaderService):
 
 
 def func():
+    # [CVCameraStream(0)]
     img_reader = ImageReaderService()  # type: ignore
     box_detect = BoxDetectService()  # type: ignore
     box_reader = BoxReaderService()  # type: ignore
@@ -58,3 +59,8 @@ def func():
 
         queue.put(None) # type: ignore
         worker.join()
+
+if __name__ == "__main__":
+    from src.config.logging import setup_logging
+    setup_logging()
+    func()

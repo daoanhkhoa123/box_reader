@@ -2,7 +2,7 @@ import logging
 from typing import TYPE_CHECKING, Tuple
 
 from src.domain.box_reader import BoxReader
-from src.domain.entities import BoxInfo, ImageInfo, InferenceResult
+from src.domain.entities import BoxInfo, InferenceResult
 from src.domain.image_streamer import Frames
 
 logger = logging.getLogger(__name__)
@@ -33,11 +33,16 @@ class BoxReaderService:
     def __init__(self, box_reader: BoxReader, uow:"BaseUnitOfWorkFactory") -> None:
         self.box_reader = box_reader
         self.uow = uow
+        self.logger = logger.getChild(self.__class__.__name__)
+        self.logger.debug("Box Reader Service initialized with version %s", box_reader.version)
 
     def read(self, frames: Frames, image_id: str) -> Tuple[BoxInfo, InferenceResult]:
         box_info = self.box_reader.read(frames[0].img.tobytes())
+        self.logger.debug("Box information extracted %s", box_info)
+
         with self.uow() as uow:
             inference_result = InferenceResult(image_id, box_information=box_info, model_version=self.box_reader.version)
             inference_result = uow.inference_repository.save(inference_result)
+            self.logger.debug("Inference result saved image_id=%s", image_id)
 
         return box_info, inference_result
