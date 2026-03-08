@@ -2,7 +2,7 @@ import logging
 from typing import TYPE_CHECKING, Tuple
 
 from src.domain.box_reader import BoxReader
-from src.domain.entities import BoxInfo, ImageInfo, InferenceResult
+from src.domain.entities import BoxInfo, InferenceResult
 from src.domain.image_streamer import Frames
 
 logger = logging.getLogger(__name__)

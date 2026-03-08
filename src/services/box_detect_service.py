@@ -50,10 +50,11 @@ class BoxDetectService:
         paths = []
 
         if has_box:
+            self.logger.debug("Box detected!")
+
             with self.uow() as uow:
                 paths = [uow.image_repository.save(ImageInfo(f.src), f.img.tobytes()) for f in frames]
 
             self.logger.debug("Box image saved at %s", paths)   
-            self.logger.debug("Box detected!")
 
         return has_box, paths

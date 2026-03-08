@@ -21,7 +21,7 @@ class MockBoxDetector(BoxDetector):
         self.calls = []
 
     def has_box(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> bool:
-        if random.random() < 0.3:
+        if random.random() < 0.1:
             self.calls.append((raw_bytes, image))
             return self._result
         return not self._result
