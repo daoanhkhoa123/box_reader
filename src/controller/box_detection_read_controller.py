@@ -6,9 +6,9 @@ from src.domain.image_streamer import Frames
 from src.services.box_detect_service import BoxDetectService
 from src.services.box_reader_service import BoxReaderService
 from src.services.image_reader_service import ImageReaderService
-from src.infrastructure.camera.cv_camera_stream import CVCameraStream
+from src.services.box_callback_service import BoxCallBackService
 
-def _reader_worker(queue: Queue, box_reader: BoxReaderService):
+def _reader_worker(queue: Queue, box_reader: BoxReaderService, box_callback: BoxCallBackService):
     while True:
         task = queue.get()
 
@@ -18,7 +18,8 @@ def _reader_worker(queue: Queue, box_reader: BoxReaderService):
         frames, image_id = task
 
         try:
-            box_info, infer_result = box_reader.read(frames, image_id)
+            callback, infer_result = box_reader.read(frames, image_id)
+            box_callback.call(callback)
         finally:
             queue.task_done()
 
@@ -28,12 +29,13 @@ def func():
     img_reader = ImageReaderService()  # type: ignore
     box_detect = BoxDetectService()  # type: ignore
     box_reader = BoxReaderService()  # type: ignore
+    box_callback = BoxCallBackService()
 
     queue: Queue[Tuple[Frames, str]] = Queue(maxsize=10)
 
     worker = Thread(
         target=_reader_worker,
-        args=(queue, box_reader),
+        args=(queue, box_reader, box_callback),
         daemon=True,
     )
     worker.start()
