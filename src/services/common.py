@@ -7,7 +7,6 @@ def default_injection(params: Dict[str, Callable]):
     def decorate(cls):
         original_init = cls.__init__
         sig = inspect.signature(original_init)
-
         @wraps(original_init)
         def __init__(self, *args, **kwargs):
             bound = sig.bind_partial(self, *args, **kwargs)

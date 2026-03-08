@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 from src.services.common import default_injection
 
 
-def _lazy_boxreader():
+def _lazy_boxdectect():
     from tests.mocks.boxes import MockBoxDetector
     return MockBoxDetector()
 
@@ -26,7 +26,7 @@ def _lazy_uowfact():
     return MockUnitOfWorkFactory(MockImageRepository(), MockInferenceRepository())
 
 _DEFAULT_PARAMS = {
-    "box_reader": _lazy_boxreader,
+    "box_detector": _lazy_boxdectect,
     "uow": _lazy_uowfact
 }
 
@@ -36,7 +36,7 @@ class BoxDetectService:
         self.box_detector = box_detector
         self.uow = uow
         self.logger = logger.getChild(self.__class__.__name__)
-        self.logger.debug("Box Detect Service initialized")
+        self.logger.debug("Box Detect Service initialized with version %s", box_detector.version)
 
     def detect(self, frames: Frames):
         frame = frames[0].img # example    
@@ -52,7 +52,8 @@ class BoxDetectService:
         if has_box:
             with self.uow() as uow:
                 paths = [uow.image_repository.save(ImageInfo(f.src), f.img.tobytes()) for f in frames]
-                
+
+            self.logger.debug("Box image saved at %s", paths)   
             self.logger.debug("Box detected!")
 
         return has_box, paths

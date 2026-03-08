@@ -4,7 +4,7 @@ from src.domain.box_callback import CallbackEnum, ModelCallback
 from src.domain.box_detector import BoxDetector
 from src.domain.box_reader import BoxReader
 from src.domain.entities import BoxInfo, ImageInfo
-
+import random
 
 class MockModelCallback(ModelCallback):
 
@@ -15,15 +15,16 @@ class MockModelCallback(ModelCallback):
         self.calls.append(callback_enum)
 
 class MockBoxDetector(BoxDetector):
-
     def __init__(self, has_box_result: bool = True, version: str = "mock-detector"):
         self._result = has_box_result
         self.version = version
         self.calls = []
 
     def has_box(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> bool:
-        self.calls.append((raw_bytes, image))
-        return self._result
+        if random.random() < 0.3:
+            self.calls.append((raw_bytes, image))
+            return self._result
+        return not self._result
     
 class MockBoxReader(BoxReader):
     def __init__(self, box_info: BoxInfo, version: str = "mock-reader"):
