@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from src.domain.entities import BoxInfo, ImageInfo
 
@@ -9,5 +9,5 @@ class BoxReader:
     Determines whether readable information exists on a box.
     """
 
-    def read(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> BoxInfo:
+    def read(self, raw_bytes: bytes, image: Optional[ImageInfo] = None) -> Tuple[float, BoxInfo]:
         raise NotImplementedError

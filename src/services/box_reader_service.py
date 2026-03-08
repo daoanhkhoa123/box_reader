@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Tuple
 from src.domain.box_reader import BoxReader
 from src.domain.entities import BoxInfo, InferenceResult
 from src.domain.image_streamer import Frames
+from src.domain.box_callback import BoxCallbackEnum
 
 logger = logging.getLogger(__name__)
 
@@ -36,8 +37,8 @@ class BoxReaderService:
         self.logger = logger.getChild(self.__class__.__name__)
         self.logger.debug("Box Reader Service initialized with version %s", box_reader.version)
 
-    def read(self, frames: Frames, image_id: str) -> Tuple[BoxInfo, InferenceResult]:
-        box_info = self.box_reader.read(frames[0].img.tobytes())
+    def read(self, frames: Frames, image_id: str) -> Tuple[BoxCallbackEnum, InferenceResult]:
+        confidence_score, box_info = self.box_reader.read(frames[0].img.tobytes())
         self.logger.debug("Box information extracted %s", box_info)
 
         with self.uow() as uow:
@@ -45,4 +46,11 @@ class BoxReaderService:
             inference_result = uow.inference_repository.save(inference_result)
             self.logger.debug("Inference result saved image_id=%s", image_id)
 
-        return box_info, inference_result
+        callback_enum = BoxCallbackEnum.NONE
+        # NOTE: this is just not yet known for sure which should be done
+        if confidence_score > 0.5:
+            callback_enum = BoxCallbackEnum.ACCEPT
+        else:
+            callback_enum = BoxCallbackEnum.REJECT
+
+        return callback_enum, inference_result

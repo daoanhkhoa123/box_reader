@@ -1,9 +1,9 @@
 from enum import Enum, auto
 
-
-class CallbackEnum(Enum):
+class BoxCallbackEnum(Enum):
+    NONE = auto()
     ACCEPT = auto()
     REJECT = auto()
 
-class ModelCallback:
-    def call(self, callback_enum: CallbackEnum):  ...
+class BoxCallback:
+    def call(self, callback_enum: BoxCallbackEnum):  ...
