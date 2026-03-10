@@ -7,6 +7,6 @@ class CVLLMBigBoxSevice:
         event_bus.subscribe(CVLLMBigBoxEvent, self.run)
 
     def run(self, event: CVLLMBigBoxEvent):
-        print("I got", event)
+        print("reading some box", event)
 
         
