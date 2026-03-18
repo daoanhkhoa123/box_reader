@@ -1,10 +1,11 @@
+import random
 from typing import List, Optional, Tuple
 
-from src.domain.box_callback import BoxCallbackEnum, BoxCallback
-from src.domain.box_detector import BoxDetector
+from src.domain.ai_models import BoxDetector
+from src.domain.box_callback import BoxCallback, BoxCallbackEnum
 from src.domain.box_reader import BoxReader
 from src.domain.entities import BoxInfo, ImageInfo
-import random
+
 
 class MockModelCallback(BoxCallback):
 

@@ -8,5 +8,35 @@ dependencies = [
     "isort>=8.0.0",
     "opencv-python>=4.13.0.92",
     "pillow>=12.1.1",
-    "pydantic-settings>=2.13.1",
+    "pydantic-settings==2.13.1",
+    "ultralytics>=8.4.23",
 ]
+
+[project.optional-dependencies]
+cpu = ["torch"]
+gpu = ["torch"]
+
+[tool.uv]
+conflicts = [
+    [
+        { extra = "cpu" },
+        { extra = "gpu" }
+    ]
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "torch-cpu", extra = "cpu" },
+    { index = "torch-gpu", extra = "gpu" }
+]
+
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+
+[[tool.uv.index]]
+name = "torch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+
+[[tool.uv.index]]
+name = "torch-gpu"
+url = "https://download.pytorch.org/whl/cu124"

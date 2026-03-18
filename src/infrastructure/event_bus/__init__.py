@@ -1,1 +1,0 @@
-from src.infrastructure.event_bus.event_bus import EventBus

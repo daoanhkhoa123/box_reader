@@ -1,10 +1,8 @@
-from src.infrastructure.event_bus import EventBus
-from src.infrastructure.camera.cv_camera_stream import CVCameraStream
-
 from src.domain.sensor import Sensor
-
-from src.services.sensor_service import SensorService
+from src.infrastructure.camera.cv_camera_stream import CVCameraStream
+from src.infrastructure.event_bus import EventBus
 from src.services.cvllm_bigbox_service import CVLLMBigBoxSevice
+from src.services.sensor_service import SensorService
 
 
 def bootstrap():
