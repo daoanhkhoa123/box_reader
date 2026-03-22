@@ -29,9 +29,6 @@ class DinoV3Model:
 
         self._load_model()
 
-    # -------------------------
-    # Lifecycle
-    # -------------------------
     def _load_model(self):
         self.logger.debug("enter: load_model")
 
@@ -47,9 +44,6 @@ class DinoV3Model:
         self.logger.info("Model loaded from %s", self.model_path)
         self.logger.debug("exit: load_model")
 
-    # -------------------------
-    # Preprocess
-    # -------------------------
     def _decode_image(self, image: Union[bytes, np.ndarray, str]) -> Image.Image:
         self.logger.debug("enter: decode_image type=%s", type(image))
 
@@ -74,9 +68,6 @@ class DinoV3Model:
         self.logger.debug("exit: decode_image")
         return img
 
-    # -------------------------
-    # Inference
-    # -------------------------
     @torch.no_grad()
     def embed(self, image: Union[bytes, np.ndarray, str]) -> np.ndarray:
         self.logger.debug("enter: embed")
@@ -86,24 +77,9 @@ class DinoV3Model:
 
         outputs = self.model(**inputs)
 
-        # 👇 best practice: use pooled output (CLS)
         embedding = outputs.pooler_output.cpu().numpy()[0]
 
         self.logger.info("Embedding shape: %s", embedding.shape)
         self.logger.debug("exit: embed")
 
         return embedding
-
-    # -------------------------
-    # Utility
-    # -------------------------
-    def similarity(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
-        self.logger.debug("enter: similarity")
-
-        emb1 = emb1 / np.linalg.norm(emb1)
-        emb2 = emb2 / np.linalg.norm(emb2)
-
-        score = float(np.dot(emb1, emb2))
-
-        self.logger.debug("exit: similarity score=%f", score)
-        return score

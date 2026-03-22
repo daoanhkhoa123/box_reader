@@ -86,16 +86,3 @@ class YoloModel:
 
         self.logger.debug("exit: has_object result=%s", result)
         return result
-
-    # -------------------------
-    # Export
-    # -------------------------
-    def export(self, format: str = "onnx") -> str:
-        self.logger.debug("enter: export format=%s", format)
-
-        path = self.model.export(format=format)
-
-        self.logger.info("Model exported to %s", path)
-        self.logger.debug("exit: export")
-
-        return path
